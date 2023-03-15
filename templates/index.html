@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Scanner</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function checkScanStatus() {
+            $.getJSON("/scan_status", function(data) {
+                if (data.status === 'complete') {
+                    alert("Scan completed and report generated!");
+                    document.getElementById("submit-button").disabled = false;
+                } else {
+                    setTimeout(checkScanStatus, 1000); // Check the status every second
+                }
+            });
+        }
+
+        function onSubmit(event) {
+            event.preventDefault();
+            document.getElementById("submit-button").disabled = true;
+            $.post("/scan", $("#scan-form").serialize(), function() {
+                checkScanStatus();
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Vulnerability Scanner</h1>
+    <form id="scan-form" onsubmit="onSubmit(event)">
+        <label for="url">URL:</label>
+        <input type="text" id="url" name="url">
+        <button type="submit" id="submit-button">Run Scan</button>
+    </form>
+</body>
+</html>
+
