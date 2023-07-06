@@ -14,7 +14,7 @@ def scan():
     global scan_in_progress, scan_complete
     url = request.form['url']
     scan_in_progress = True
-    # Replace the following line with the actual function call for your vulnerability scanner
+    # Replace the following line of code with the actual function call for your vulnerability scanner
     # vulnerability_scanner.run_scan(url)
     scan_in_progress = False
     scan_complete = True
